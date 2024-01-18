@@ -2,7 +2,7 @@
 POST /content/course/list
 
 ### 查询课程信息
-POST {{content_host}}/content/course/list?pageNo=1&pageSize=2
+POST {{gateway_host}}/content/course/list?pageNo=1&pageSize=2
 Content-Type: application/json
 
 {
@@ -13,6 +13,9 @@ Content-Type: application/json
 
 ### 查询课程分类
 GET {{content_host}}/content/course-category/tree-nodes
+
+### 查询课程
+GET {{content_host}}/content/course/1
 
 ### 新增课程
 POST {{content_host}}/content/course/create
@@ -28,7 +31,7 @@ Content-Type: application/json
   "validDays": 365,
   "mt": "1-1",
   "st": "1-1-1",
-  "name": "测试课程105",
+  "name": "",
   "pic": "",
   "teachmode": "200002",
   "users": "初级人员",
@@ -36,6 +39,10 @@ Content-Type: application/json
   "grade": "204001",
   "description": "测试课程105测试课程105测试课程105"
 }
+
+### 课程计划查询
+GET {{content_host}}/content/teachplan/117/tree-nodes
+Content-Type: application/json
 
 
 <> 2024-01-12T172058.200.json

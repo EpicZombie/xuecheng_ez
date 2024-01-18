@@ -1,20 +1,20 @@
 package com.xuecheng.content.api;
 
 
+import com.xuecheng.base.exception.ValidationGroups;
 import com.xuecheng.base.model.PageParams;
 import com.xuecheng.base.model.PageResult;
 import com.xuecheng.content.service.CourseBaseInfoService;
 import com.xuecheng.model.dto.AddCourseDto;
 import com.xuecheng.model.dto.CourseBaseInfoDto;
+import com.xuecheng.model.dto.EditCourseDto;
 import com.xuecheng.model.dto.QueryCourseParamsDto;
 import com.xuecheng.model.po.CourseBase;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,11 +42,30 @@ public class CourseBaseInfoController {
 
       @ApiOperation("课程新增接口")
       @PostMapping("/course/create")
-      public CourseBaseInfoDto createCourseBase(@RequestBody AddCourseDto addCourseDto){
+      public CourseBaseInfoDto createCourseBase(@RequestBody @Validated(ValidationGroups.Insert.class) AddCourseDto addCourseDto){
           //机构id，由于认证系统没有上线暂时硬编码
           Long companyId = 1232141425L;
           return courseBaseInfoService.createCourseBase(companyId,addCourseDto);
       }
+
+      @ApiOperation("课程id查询接口")
+      @GetMapping("/course/{courseId}")
+      public CourseBaseInfoDto getCourseBase(@PathVariable Long courseId){
+         CourseBaseInfoDto courseBaseInfoDto = courseBaseInfoService.getCourseBaseInfo(courseId);
+         return courseBaseInfoDto;
+      }
+
+    @ApiOperation("修改课程基础信息")
+    @PutMapping("/course")
+    public CourseBaseInfoDto modifyCourseBase(@RequestBody @Validated(ValidationGroups.update.class) EditCourseDto editCourseDto){
+         Long companyId = 1232141425L;
+        CourseBaseInfoDto courseBaseInfoDto = courseBaseInfoService.updateCourseBase(companyId, editCourseDto);
+        return courseBaseInfoDto;
+    }
+
+
+
+
 
 
 }
